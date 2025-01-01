@@ -1,0 +1,40 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'BookSupp Projectiom View Draft RefScen'
+
+@Metadata.allowExtensions: true
+@Search.searchable: true
+
+define view entity ZC_BookingSupplement_A_Mehdi_D as projection on ZR_BookingSupplement_Mehdi_D
+{
+  key BookSupplUUID,
+
+      TravelUUID,
+
+      BookingUUID,
+
+      @Search.defaultSearchElement: true
+      BookingSupplementID,
+
+      @ObjectModel.text.element: ['SupplementDescription']
+      @Consumption.valueHelpDefinition: [ 
+          {  entity: {name: '/DMO/I_Supplement_StdVH', element: 'SupplementID' },
+             additionalBinding: [ { localElement: 'BookSupplPrice',  element: 'Price',        usage: #RESULT },
+                                  { localElement: 'CurrencyCode',    element: 'CurrencyCode', usage: #RESULT }]
+              }
+        ]
+      SupplementID,
+      _SupplementText.Description as SupplementDescription : localized,
+
+      BookSupplPrice,
+
+      @Consumption.valueHelpDefinition: [{entity: {name: 'I_CurrencyStdVH', element: 'Currency' }, useForValidation: true }]
+      CurrencyCode,
+
+      LocalLastChangedAt,
+
+      /* Associations */
+      _Booking : redirected to parent ZC_BOOKING_A_MEHDI_D,
+      _Product,
+      _SupplementText,
+      _Travel  : redirected to ZC_TRAVEL_A_MEHDI_D
+}
