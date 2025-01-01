@@ -1,0 +1,6 @@
+@EndUserText.label: 'Deduct Discout'
+define abstract entity ZA_deduct_discout_Mehdi
+{
+    Discount : abap.int1;
+    
+}
